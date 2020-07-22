@@ -1,7 +1,12 @@
 #include <Arduino.h>
 
+// storing the pin status
 int pinStatus = HIGH;
+
+// selecting the pushbutton pin
 int pinSelect = 16;
+
+// selection the led pin
 int ledSelect = 26;
 
 void setup()
@@ -21,11 +26,16 @@ void loop()
   // scanning for any push on the button
   if (!digitalRead(pinSelect))
   {
+    // debouncing delay
     delay(150);
+
+    // wait until the button is released
     while (!digitalRead(pinSelect));
 
     // toggling the status of pin ledSelect
     pinStatus = digitalRead(ledSelect) ? LOW : HIGH;
+
+    // writing the pin status
     digitalWrite(ledSelect, pinStatus);
   }
 }
