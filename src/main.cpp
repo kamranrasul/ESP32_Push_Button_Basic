@@ -27,10 +27,11 @@ void loop()
   if (!digitalRead(pinSelect))
   {
     // debouncing delay
-    delay(150);
+    delay(160);
 
     // wait until the button is released
-    while (!digitalRead(pinSelect));
+    while (!digitalRead(pinSelect))
+      ;
 
     // writing the toggled pin state
     digitalWrite(ledSelect, digitalRead(ledSelect) ? LOW : HIGH);
