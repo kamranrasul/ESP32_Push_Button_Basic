@@ -1,48 +1,31 @@
 #include <Arduino.h>
 
+int pinStatus = HIGH;
+int pinSelect = 16;
+int ledSelect = 26;
+
 void setup()
 {
-  // put your setup code here, to run once:
+  // starting the serial communication
   Serial.begin(115200);
 
   // setting pin 16 as input_pullup pin
-  pinMode(16, INPUT_PULLUP);
+  pinMode(pinSelect, INPUT_PULLUP);
 
-  // setting the pin 26 as output mode
-  pinMode(26, OUTPUT);
+  // setting the pin ledSelect as output mode
+  pinMode(ledSelect, OUTPUT);
 }
-
-int dvalue = 0;
 
 void loop()
 {
-  // put your main code here, to run repeatedly:
   // scanning for any push on the button
-  if (!digitalRead(16))
+  if (!digitalRead(pinSelect))
   {
-    // writing the status of button on the serial
-    Serial.println("Pushed");
-    // debounce delay
     delay(150);
+    while (!digitalRead(pinSelect));
 
-    // waiting for the button to be released
-    while (!digitalRead(16))
-      ;
-
-    // writing the status of button on the serial
-    Serial.println("Released");
-
-    // toggling the status of pin 26
-    if (dvalue)
-    {
-      Serial.println("LOW");
-      digitalWrite(26, LOW);
-    }
-    else
-    {
-      Serial.println("HIGH");
-      digitalWrite(26, HIGH);
-    }
+    // toggling the status of pin ledSelect
+    pinStatus = digitalRead(ledSelect) ? LOW : HIGH;
+    digitalWrite(ledSelect, pinStatus);
   }
-  dvalue = digitalRead(26);
 }
