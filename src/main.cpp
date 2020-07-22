@@ -1,13 +1,10 @@
 #include <Arduino.h>
 
-// storing the pin status
-int pinStatus = HIGH;
+// selection the led pin
+#define LED_PIN 26
 
 // selecting the pushbutton pin
-int pinSelect = 16;
-
-// selection the led pin
-int ledSelect = 26;
+int button = 16;
 
 void setup()
 {
@@ -15,25 +12,25 @@ void setup()
   Serial.begin(115200);
 
   // setting pin 16 as input_pullup pin
-  pinMode(pinSelect, INPUT_PULLUP);
+  pinMode(button, INPUT_PULLUP);
 
   // setting the pin ledSelect as output mode
-  pinMode(ledSelect, OUTPUT);
+  pinMode(LED_PIN, OUTPUT);
 }
 
 void loop()
 {
   // scanning for any push on the button
-  if (!digitalRead(pinSelect))
+  if (!digitalRead(button))
   {
     // debouncing delay
     delay(160);
 
     // wait until the button is released
-    while (!digitalRead(pinSelect))
+    while (!digitalRead(button))
       ;
 
     // writing the toggled pin state
-    digitalWrite(ledSelect, digitalRead(ledSelect) ? LOW : HIGH);
+    digitalWrite(LED_PIN, digitalRead(LED_PIN) ? LOW : HIGH);
   }
 }
