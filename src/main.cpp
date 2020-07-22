@@ -32,10 +32,7 @@ void loop()
     // wait until the button is released
     while (!digitalRead(pinSelect));
 
-    // toggling the status of pin ledSelect
-    pinStatus = digitalRead(ledSelect) ? LOW : HIGH;
-
-    // writing the pin status
-    digitalWrite(ledSelect, pinStatus);
+    // writing the toggled pin state
+    digitalWrite(ledSelect, digitalRead(ledSelect) ? LOW : HIGH);
   }
 }
